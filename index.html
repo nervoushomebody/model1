@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hand Gesture Recognition</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+
+    #video-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 640px; /* Limit video size */
+      height: auto;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      position: absolute; /* For proper stacking */
+      top: 0;
+      left: 0;
+    }
+
+    canvas {
+      position: absolute; /* Ensure canvas overlays the video */
+      top: 0;
+      left: 0;
+      pointer-events: none; /* Prevent interfering with gestures */
+    }
+
+    #menu {
+      width: 100%;
+      max-width: 640px; /* Match video width */
+      padding: 10px;
+      background: #f0f0f0;
+    }
+
+    h2, h3 {
+      margin: 10px 0;
+    }
+
+    button, input {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .gesture-item {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      background: #fff;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu">
+    <h2>Hand Gestures</h2>
+    <input type="text" id="gestureName" placeholder="Gesture name" />
+    <button id="saveGesture">Save Gesture</button>
+    <h3>Saved Gestures</h3>
+    <div id="gestureList"></div>
+
+    <h3>Error Threshold</h3>
+    <input type="range" id="errorSlider" min="1" max="80" value="10" />
+    <div>Value: <span id="errorValue">10</span></div>
+
+    <h3>Import/Export</h3>
+    <button id="exportGestures">Export Gestures</button>
+    <input type="file" id="importGestures" />
+  </div>
+
+  <div id="video-container">
+    <video id="webcam" autoplay muted playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+  <script src="script.js"></script>
+</body>
+</html>
